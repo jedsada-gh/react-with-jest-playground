@@ -49,17 +49,23 @@ export class DataService {
   }
 }
 
-export const getData = () => {
-  return new Promise<any>((resolve, reject) => {
-    fetch("https://jsonplaceholder.typicode.com/todos/1")
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        resolve(data);
-      })
-      .catch((error) => {
-        reject(error);
-      });
-  });
-};
+// export const getData = () => {
+//   return new Promise<any>((resolve, reject) => {
+//     fetch("https://jsonplaceholder.typicode.com/todos/1")
+//       .then((response) => {
+//         return response.json();
+//       })
+//       .then((data) => {
+//         resolve({title: "fdsafadskljfl;kdsjffasdfdsa"});
+//       })
+//       .catch((error) => {
+//         reject(error);
+//       });
+//   });
+// };
+
+
+export const getUser = async () => {
+  const res = await axios.get("https://jsonplaceholder.typicode.com/todos/1")
+  return res.data
+}

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { DataRepository, DataService, getData } from "./service";
+import { DataRepository, DataService } from "./service";
 
 export default function Counter() {
   const [count, setCount] = useState(0);
@@ -11,15 +11,9 @@ export default function Counter() {
     return new DataService(new DataRepository());
   }, []);
 
-  useEffect(() => {
-    // getData()
-    //   .then((data) => {
-    //     setData(data);
-    //   })
-    //   .catch((err) => {
-    //     setErrorMessage(err);
-    //   });
+  const [color, setColor] = useState("red")
 
+  useEffect(() => {
     service
       .getData()
       .then((data) => {
@@ -32,19 +26,25 @@ export default function Counter() {
 
   return (
     <>
-      <h2>{count}</h2>
+      <h2 style={{ color: `${color}` }}>{count}</h2>
       <div>
         <button
           data-testid="plus-btn"
           type="button"
-          onClick={() => setCount(count + 1)}
+          onClick={() => {
+            setColor("red")
+            setCount(count + 1)
+          }}
         >
           +
         </button>
         <button
           data-testid="minus-btn"
           type="button"
-          onClick={() => setCount(count - 1)}
+          onClick={() => {
+            setColor("green")
+            setCount(count - 1)
+          }}
         >
           -
         </button>
