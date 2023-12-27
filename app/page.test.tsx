@@ -3,16 +3,20 @@
  */
 import { render, screen, waitFor } from "@testing-library/react";
 import Page from "./page";
-import { getData } from "./service";
+import { DataService, getData } from "./service";
 
-jest.mock("./service", () => ({
-  getData: jest.fn(),
-}));
+// jest.mock("./service", () => ({
+//   getData: jest.fn(),
+// }));
 
 it("App Router: Works with Server Components", async () => {
-  (getData as jest.Mock).mockReturnValue(
-    Promise.resolve({ title: "delectus aut autem" })
-  );
+  // (getData as jest.Mock).mockReturnValue(
+  //   Promise.resolve({ title: "delectus aut autem" })
+  // );
+
+  jest.spyOn(DataService.prototype, "getData").mockImplementation(() => {
+    return Promise.resolve({ title: "Hi there, I am a mock" });
+  });
   render(<Page />);
   
   // screen.getByRole("heading", {level: 1})
@@ -26,6 +30,6 @@ it("App Router: Works with Server Components", async () => {
   );
 
   await waitFor(() => {
-    expect(screen.getByTestId("title")).toHaveTextContent("delectus aut autem");
+    expect(screen.getByTestId("title")).toHaveTextContent("Hi there, I am a mock");
   });
 });

@@ -1,31 +1,33 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { Service, getData } from "./service";
+import { DataRepository, DataService, getData } from "./service";
 
 export default function Counter() {
   const [count, setCount] = useState(0);
   const [data, setData] = useState<any>(null);
   const [errorMessage, setErrorMessage] = useState(null);
-  // const service: Service = new Service();
+  const service: DataService = useMemo(() => {
+    return new DataService(new DataRepository());
+  }, []);
 
   useEffect(() => {
-    getData()
-      .then((data) => {
-        setData(data);
-      })
-      .catch((err) => {
-        setErrorMessage(err);
-      });
-
-    // service
-    //   .getData()
+    // getData()
     //   .then((data) => {
     //     setData(data);
     //   })
     //   .catch((err) => {
     //     setErrorMessage(err);
     //   });
+
+    service
+      .getData()
+      .then((data) => {
+        setData(data);
+      })
+      .catch((err) => {
+        setErrorMessage(err);
+      });
   }, []);
 
   return (
